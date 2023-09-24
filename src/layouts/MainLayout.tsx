@@ -22,7 +22,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <div className="w-12 h-12 bg-[#D9D9D9] rounded-full" />
 
         {/* pagelist */}
-
         <div className="space-y-6">
           {navList.map((nav) => (
             <div
@@ -39,7 +38,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </div>
 
-      {children}
+      <div className="p-8">{children}</div>
     </div>
   );
 };

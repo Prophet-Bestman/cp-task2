@@ -1,9 +1,10 @@
 import MainLayout from "./layouts/MainLayout";
+import { ProgramApplicationView } from "./pages";
 
 function App() {
   return (
     <MainLayout>
-      <div className="text-4xl">Hello world</div>
+      <ProgramApplicationView />
     </MainLayout>
   );
 }
