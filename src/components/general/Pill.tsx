@@ -13,7 +13,7 @@ const Pill = ({ text, canDelete }: Props) => {
         canDelete ? "text-[#808EA3]" : "text-[#6B6B6B] "
       } `}
     >
-      <p>{text}</p>
+      <div>{text}</div>
 
       {canDelete && <CloseIcon />}
     </div>

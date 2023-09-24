@@ -25,6 +25,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <div className="space-y-6">
           {navList.map((nav) => (
             <div
+              key={nav.name}
               onClick={() => setSelectedNav(nav.name)}
               className={`p-3 cursor-pointer rounded-lg transition-all duration-500 ease-in-out  ${
                 selectedNav === nav.name

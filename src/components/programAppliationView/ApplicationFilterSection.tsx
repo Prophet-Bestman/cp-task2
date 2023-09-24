@@ -1,4 +1,4 @@
-import { Checkbox, Dropdown, Input, MenuProps, Tag } from "antd";
+import { Checkbox, Dropdown, Input, List, MenuProps, Tag } from "antd";
 import {
   CheveronDown,
   HomeIcon,
@@ -8,45 +8,37 @@ import {
 import { useEffect, useState } from "react";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { CustomAvatar, Pill } from "../general";
+import { useApplicationsContext } from "../../context/ApplicationsProvider";
 
 const categories = [
   {
-    name: "Qualified",
+    name: "qualified",
     number: 247,
   },
   {
-    name: "Task",
+    name: "task",
     number: 25,
   },
   {
-    name: "Disqualified",
+    name: "disqualified",
     number: 78,
-  },
-];
-
-const data = [
-  {
-    title: "Frances R. Kostka",
-  },
-  {
-    title: "Aaliyah Sanderson",
-  },
-  {
-    title: "Michael D. McKee",
-  },
-  {
-    title: "Christel R. Sclafani",
   },
 ];
 
 const ApplicationFilterSection = () => {
   const [selectedTab, setSelectedTab] = useState(categories[0].name);
   const [checked, setChecked] = useState<CheckboxValueType[]>([]);
-  const [indeterminate, setIndeterminate] = useState<any>(false);
   const [checkAll, setCheckAll] = useState(false);
 
+  const {
+    applications,
+    selectCategory,
+    searchApplication,
+    selectApplication,
+    selectedApplication,
+  } = useApplicationsContext();
+
   useEffect(() => {
-    setIndeterminate(checked.length && checked.length !== users.length);
     setCheckAll(checked.length === users.length);
   }, [checked]);
 
@@ -56,12 +48,12 @@ const ApplicationFilterSection = () => {
   };
 
   return (
-    <div className="w-[440px] min-h-screen  space-y-2 ">
+    <div className="w-[440px] min-h-[calc(100vh - 32px)]  space-y-2 ">
       {/* @ts-ignore */}
       <Dropdown menu={{ items }} className="cursor-pointer" trigger="click">
         <a onClick={(e) => e.preventDefault()}>
           <div className="flex items-center p-2 bg-white rounded-lg">
-            <div className="flex  items-center justify-center w-8 h-8 p-2 text-[13px] font-bold uppercase rounded-full bg-bg">
+            <div className="center-item w-8 h-8 p-2 text-[13px] font-bold uppercase rounded-full bg-bg">
               <p>SIP</p>
             </div>
             <Hr />
@@ -72,11 +64,11 @@ const ApplicationFilterSection = () => {
             <Hr />
             <CheveronDown />
           </div>
-          {/* <Space>Hover me</Space> */}
         </a>
       </Dropdown>
 
       <Input
+        onChange={(e) => searchApplication(e.target.value)}
         className="h-12 remove-input-styles placeholder:text-[#9AA6AC] w-full"
         placeholder="Serach by name, edu, exp or #tag"
         prefix={
@@ -92,25 +84,27 @@ const ApplicationFilterSection = () => {
       />
 
       <div className="flex items-center p-2 bg-white rounded-t-2xl h-[54px]">
-        <Checkbox
-          // indeterminate={indeterminate}
-          onChange={onCheckAllChange}
-          checked={checkAll}
-        ></Checkbox>
-
+        <Checkbox onChange={onCheckAllChange} checked={checkAll}></Checkbox>
         <div className="flex items-center gap-4">
           {categories.map((category) => (
-            <div className="flex items-center ">
+            <div
+              key={category.name}
+              className="flex items-center capitalize cursor-pointer"
+            >
               <Hr />
 
               <div
-                className={`text-sm font-medium flex items-center gap-2 ${
+                className={`text-sm font-medium flex items-center gap-2 smooth-transit ${
                   selectedTab === category.name ? "text-primary" : "text-black"
                 }`}
+                onClick={() => {
+                  selectCategory(category.name);
+                  setSelectedTab(category.name);
+                }}
               >
                 {category.name}
                 <span
-                  className={`p-[4px] text-[10px] rounded-full ${
+                  className={`p-[4px] text-[10px] rounded-full smooth-transit ${
                     selectedTab === category.name ? "bg-primaryBg" : ""
                   }  `}
                 >
@@ -131,47 +125,64 @@ const ApplicationFilterSection = () => {
           }}
         >
           <div className="w-full space-y-2">
-            {users.map((user, i) => (
-              <div key={i} className="flex items-center w-full gap-2">
-                <Checkbox value={user.name} />
+            <List
+              className="demo-loadmore-list"
+              itemLayout="horizontal"
+              dataSource={applications}
+              renderItem={({
+                name,
+                degree,
+                hashTags,
+                id,
+                nationality,
+                tags,
+                year,
+              }) => (
+                <div key={id} className="flex items-center w-full gap-2">
+                  <Checkbox value={name} />
 
-                <div
-                  className={`flex items-center rounded-3xl p-4 gap-6 cursor-pointer transition-all ease-in-out duration-500 hover:bg-[#F5F8FF] w-full`}
-                >
-                  <CustomAvatar name={user.name} />
+                  <div
+                    className={`flex items-center rounded-3xl p-4 gap-6 cursor-pointer transition-all ease-in-out duration-500 hover:bg-[#F5F8FF] w-full ${
+                      selectedApplication.id === id
+                        ? "bg-[#F5F8FF]"
+                        : "bg-white"
+                    }`}
+                    onClick={() => selectApplication(id)}
+                  >
+                    <CustomAvatar name={name} />
 
-                  <div className="spacey-2">
-                    <h3 className="text-sm font-semibold text-black">
-                      {user.name}
-                    </h3>
-                    <p className="text-black text-[10px] font-medium">
-                      {" "}
-                      {user.nationality}
-                    </p>
+                    <div className="spacey-2">
+                      <h3 className="text-sm font-semibold text-black">
+                        {name}
+                      </h3>
+                      <p className="text-black text-[10px] font-medium">
+                        {nationality}
+                      </p>
 
-                    <span className="text-[10px] font-light text-[black] space-x-2">
-                      {user.degree}
+                      <span className="text-[10px] font-light text-[black] space-x-2">
+                        {degree}
 
-                      <span>{user.year}</span>
-                    </span>
+                        <span>{year}</span>
+                      </span>
 
-                    <div className="flex items-center gap-2">
-                      {user.hashTags.map((tag, i) => (
-                        <div key={i} className="text-[#8492A7] text-[8px]">
-                          {tag}
-                        </div>
-                      ))}
-                    </div>
+                      <div className="flex items-center gap-2">
+                        {hashTags.map((tag, i) => (
+                          <div key={i} className="text-[#8492A7] text-[8px]">
+                            {tag}
+                          </div>
+                        ))}
+                      </div>
 
-                    <div className="flex items-center gap-2">
-                      {user.tags.map((tag, i) => (
-                        <Pill key={i} text={tag} />
-                      ))}
+                      <div className="flex items-center gap-2">
+                        {tags.map((tag, i) => (
+                          <Pill key={i} text={tag} />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )}
+            />
           </div>
         </Checkbox.Group>
       </div>

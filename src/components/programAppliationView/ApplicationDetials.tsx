@@ -1,9 +1,11 @@
-import React from "react";
 import userimg from "../../assets/VDO.svg";
 import { Pill } from "../general";
 import { CirclePlus } from "../../assets/Icons";
+import { useApplicationsContext } from "../../context/ApplicationsProvider";
 
-const UserDetailsSection = () => {
+const ApplicationDetials = () => {
+  const { selectedApplication } = useApplicationsContext();
+
   return (
     <div className="w-full">
       <div className="flex flex-1 w-full gap-6 px-4 py-6 bg-white rounded-3xl">
@@ -12,23 +14,25 @@ const UserDetailsSection = () => {
         <div className="space-y-4">
           <div className="flex items-center gap-4">
             <p className="text-sm font-semibold text-black">
-              Aaliyah Sanderson
+              {selectedApplication.name}
             </p>
             <div className="flex items-center gap-2">
-              <Pill text="New York" />
-              <Pill text="Marketing" />
-              <Pill text="London" />
+              {selectedApplication.tags.map((tag, i) => (
+                <Pill text={tag} key={i} />
+              ))}
             </div>
           </div>
 
           <div className="flex gap-2 text-[10px]">
-            <p>Saudi Arabia</p>|<p>aaliyahs@gmail.com</p>|
+            <p>{selectedApplication.nationality}</p>|<p>aaliyahs@gmail.com</p>|
             <p>+00 000 000 0000</p>
           </div>
 
           <div className="flex items-center gap-2">
-            <Pill text="#top_candidate" canDelete />
-            <Pill text="#marketing_june" canDelete />
+            {selectedApplication.hashTags.map((tag, i) => (
+              <Pill text={tag} key={i} />
+            ))}
+
             <Pill
               text={
                 <div className="flex items-center gap-1">
@@ -60,4 +64,4 @@ const UserDetailsSection = () => {
   );
 };
 
-export default UserDetailsSection;
+export default ApplicationDetials;

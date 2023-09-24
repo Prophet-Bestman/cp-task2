@@ -6,4 +6,12 @@
   .remove-input-styles {
     @apply border-none focus:border-none focus:shadow-none active:border-none active:shadow-none hover:border-none hover:shadow-none;
   }
+
+  .center-item {
+    @apply flex  items-center justify-center;
+  }
+
+  .smooth-transit {
+    @apply transition-all duration-500 ease-in-out;
+  }
 }
