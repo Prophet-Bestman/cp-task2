@@ -1,6 +1,6 @@
 import { Tabs, TabsProps } from "antd";
 import ApplicationHeader from "./ApplicationHeader";
-import ProfileInformation from "./ProfileInformation";
+import ProfileTab from "./ProfileTab";
 
 const ApplicationDetials = () => {
   // const { selectedApplication } = useApplicationsContext();
@@ -9,7 +9,7 @@ const ApplicationDetials = () => {
     {
       key: "1",
       label: "Profile",
-      children: <ProfileInformation />,
+      children: <ProfileTab />,
     },
     {
       key: "2",
@@ -39,7 +39,7 @@ const ApplicationDetials = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[calc(100vh-32px)] overflow-y-auto">
       <ApplicationHeader />
 
       {/* @ts-ignore */}

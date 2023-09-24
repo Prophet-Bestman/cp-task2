@@ -48,7 +48,7 @@ const ApplicationFilterSection = () => {
   };
 
   return (
-    <div className="w-[440px] min-h-[calc(100vh - 32px)]  space-y-2 ">
+    <div className="w-[440px] min-h-[calc(100vh-32px)] top-0 left-0 z-10 sticky space-y-2 ">
       {/* @ts-ignore */}
       <Dropdown menu={{ items }} className="cursor-pointer" trigger="click">
         <a onClick={(e) => e.preventDefault()}>
@@ -116,7 +116,7 @@ const ApplicationFilterSection = () => {
         </div>
       </div>
 
-      <div className="px-4 py-2 bg-white rounded-t-2xl h-[70vh] overflow-y-auto">
+      <div className="px-4 py-2 bg-white rounded-b-2xl h-[70vh] overflow-y-auto">
         <Checkbox.Group
           style={{ width: "100%" }}
           value={checked}

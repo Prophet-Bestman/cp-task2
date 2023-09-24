@@ -6,7 +6,7 @@ import {
 
 const ProgramApplicationView = () => {
   return (
-    <div className="flex w-full gap-8">
+    <div className="relative flex w-full gap-8">
       <ApplicationFilterSection />
       <ApplicationDetials />
     </div>

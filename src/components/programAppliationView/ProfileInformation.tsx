@@ -6,22 +6,23 @@ import {
   NationalId,
   NationalityIcon,
 } from "../../assets/Icons";
+import { SectionCard } from "../general";
 
 const ProfileInformation = () => {
   const { selectedApplication } = useApplicationsContext();
   return (
-    <div className="p-6 bg-white rounded-3xl">
-      <h3 className="mb-4 text-sm font-semibold text-black">
-        Personal Information
-      </h3>
-
+    <SectionCard title="Profile Information">
       <div className="grid grid-cols-2 gap-4">
         <InfoItem
           title="Nationality"
           value={selectedApplication.nationality}
           icon={<NationalityIcon />}
         />
-        <InfoItem title="National ID" value={"0000000"} icon={<NationalId />} />
+        <InfoItem
+          title="National ID"
+          value={"0000000000"}
+          icon={<NationalId />}
+        />
         <InfoItem title="Gender" value={"Female"} icon={<GenderIcon />} />
         <InfoItem
           title="Date of Birth"
@@ -29,7 +30,7 @@ const ProfileInformation = () => {
           icon={<DOBIcon />}
         />
       </div>
-    </div>
+    </SectionCard>
   );
 };
 
