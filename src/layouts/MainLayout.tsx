@@ -38,7 +38,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </div>
 
-      <div className="p-8">{children}</div>
+      <div className="w-full p-8">{children}</div>
     </div>
   );
 };

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { ApplicationFilterSection } from "../components/programAppliationView";
+import {
+  ApplicationFilterSection,
+  UserDetailsSection,
+} from "../components/programAppliationView";
 
 const ProgramApplicationView = () => {
   //   const [applications, setApplications] = useState([]);
   return (
-    <div>
-      <div className="flex gap-8">
-        <ApplicationFilterSection />
-      </div>
+    <div className="flex w-full gap-8">
+      <ApplicationFilterSection />
+      <UserDetailsSection />
     </div>
   );
 };

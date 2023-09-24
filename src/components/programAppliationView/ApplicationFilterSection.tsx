@@ -24,18 +24,6 @@ const categories = [
   },
 ];
 
-const user = {
-  name: "Frances R. Kostka",
-  nationality: "Saudi Arabia",
-  degree: "Bachelor in Marketing",
-  year: "(2023 - 2023)",
-  hashTags: ["#top_candidate", "#top_candidate"],
-  tags: ["New York", "Marketing", "London"],
-  score: 7,
-  category: "qualified",
-  id: "9n29n09",
-};
-
 const data = [
   {
     title: "Frances R. Kostka",
@@ -58,12 +46,12 @@ const ApplicationFilterSection = () => {
   const [checkAll, setCheckAll] = useState(false);
 
   useEffect(() => {
-    setIndeterminate(checked.length && checked.length !== data.length);
-    setCheckAll(checked.length === data.length);
+    setIndeterminate(checked.length && checked.length !== users.length);
+    setCheckAll(checked.length === users.length);
   }, [checked]);
 
   const onCheckAllChange = (e: any) => {
-    setChecked(e.target.checked ? data.map((item) => item.title) : []);
+    setChecked(e.target.checked ? users.map((item) => item.name) : []);
     setCheckAll(e.target.checked);
   };
 
