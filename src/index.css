@@ -8,10 +8,38 @@
   }
 
   .center-item {
-    @apply flex  items-center justify-center;
+    @apply flex items-center justify-center;
   }
 
   .smooth-transit {
     @apply transition-all duration-500 ease-in-out;
   }
+}
+
+.ant-tabs-nav {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.ant-tabs-nav::before {
+  display: none; /* Hide the line under the tab bar */
+}
+
+.ant-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #0557e5;
+  font-family: Poppins;
+}
+
+/* .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  border-bottom: 1px red solid !important;
+  z-index: 10;
+} */
+
+.ant-tabs-nav-wrap {
 }

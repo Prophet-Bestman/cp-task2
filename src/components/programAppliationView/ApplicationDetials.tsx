@@ -1,65 +1,49 @@
-import userimg from "../../assets/VDO.svg";
-import { Pill } from "../general";
-import { CirclePlus } from "../../assets/Icons";
-import { useApplicationsContext } from "../../context/ApplicationsProvider";
+import { Tabs, TabsProps } from "antd";
+import ApplicationHeader from "./ApplicationHeader";
+import ProfileInformation from "./ProfileInformation";
 
 const ApplicationDetials = () => {
-  const { selectedApplication } = useApplicationsContext();
+  // const { selectedApplication } = useApplicationsContext();
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Profile",
+      children: <ProfileInformation />,
+    },
+    {
+      key: "2",
+      label: "Video",
+      children: "VIDEO DETAILS",
+    },
+    {
+      key: "3",
+      label: "Evaluation",
+      children: "Evaluation Details",
+    },
+    {
+      key: "4",
+      label: "Placement",
+      children: "Placement Details",
+    },
+    {
+      key: "5",
+      label: "Compliance",
+      children: "Compliance Details",
+    },
+    {
+      key: "6",
+      label: "Notes",
+      children: "Notes Details",
+    },
+  ];
 
   return (
     <div className="w-full">
-      <div className="flex flex-1 w-full gap-6 px-4 py-6 bg-white rounded-3xl">
-        <img src={userimg} className="w-[88px] h-[88px]" />
+      <ApplicationHeader />
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <p className="text-sm font-semibold text-black">
-              {selectedApplication.name}
-            </p>
-            <div className="flex items-center gap-2">
-              {selectedApplication.tags.map((tag, i) => (
-                <Pill text={tag} key={i} />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-2 text-[10px]">
-            <p>{selectedApplication.nationality}</p>|<p>aaliyahs@gmail.com</p>|
-            <p>+00 000 000 0000</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {selectedApplication.hashTags.map((tag, i) => (
-              <Pill text={tag} key={i} />
-            ))}
-
-            <Pill
-              text={
-                <div className="flex items-center gap-1">
-                  <CirclePlus />
-                  <p>Add Tag</p>
-                </div>
-              }
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between ml-auto">
-          <div
-            style={{
-              boxShadow: "0px 4px 25px 0px rgba(29, 78, 216, 0.05)",
-            }}
-            className="flex items-center py-2 pl-4 pr-2 text-sm font-medium rounded-full gap-11 h-fit"
-          >
-            <p>Overall Score</p>
-            <p className="rounded-full bg-bg px-[10px] py-1">7</p>
-          </div>
-
-          <p className="text-[10px] font-light text-[#A8A8A8]">
-            Applied on 12 June 2023
-          </p>
-        </div>
-      </div>
+      {/* @ts-ignore */}
+      <Tabs className="my-8" type="none" defaultActiveKey="1" items={items} />
     </div>
   );
 };
