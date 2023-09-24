@@ -1,4 +1,4 @@
-import { Checkbox, Dropdown, Input, List, MenuProps, Tag } from "antd";
+import { Checkbox, Dropdown, Input, List, MenuProps } from "antd";
 import {
   CheveronDown,
   HomeIcon,
@@ -39,11 +39,11 @@ const ApplicationFilterSection = () => {
   } = useApplicationsContext();
 
   useEffect(() => {
-    setCheckAll(checked.length === users.length);
+    setCheckAll(checked.length === applications.length);
   }, [checked]);
 
   const onCheckAllChange = (e: any) => {
-    setChecked(e.target.checked ? users.map((item) => item.name) : []);
+    setChecked(e.target.checked ? applications.map((item) => item.id) : []);
     setCheckAll(e.target.checked);
   };
 
@@ -125,7 +125,54 @@ const ApplicationFilterSection = () => {
           }}
         >
           <div className="w-full space-y-2">
-            <List
+            {applications.map(
+              ({ name, degree, hashTags, id, nationality, tags, year }) => (
+                <div key={id} className="flex items-center w-full gap-2">
+                  <Checkbox value={id} />
+
+                  <div
+                    className={`flex items-center rounded-3xl p-4 gap-6 cursor-pointer transition-all ease-in-out duration-500 hover:bg-[#F5F8FF] w-full ${
+                      selectedApplication.id === id
+                        ? "bg-[#F5F8FF]"
+                        : "bg-white"
+                    }`}
+                    onClick={() => selectApplication(id)}
+                  >
+                    <CustomAvatar name={name} />
+
+                    <div className="spacey-2">
+                      <h3 className="text-sm font-semibold text-black">
+                        {name}
+                      </h3>
+                      <p className="text-black text-[10px] font-medium">
+                        {nationality}
+                      </p>
+
+                      <span className="text-[10px] font-light text-[black] space-x-2">
+                        {degree}
+
+                        <span>{year}</span>
+                      </span>
+
+                      <div className="flex items-center gap-2">
+                        {hashTags.map((tag, i) => (
+                          <div key={i} className="text-[#8492A7] text-[8px]">
+                            {tag}
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {tags.map((tag, i) => (
+                          <Pill key={i} text={tag} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            )}
+            {/* <List
               className="demo-loadmore-list"
               itemLayout="horizontal"
               dataSource={applications}
@@ -182,7 +229,7 @@ const ApplicationFilterSection = () => {
                   </div>
                 </div>
               )}
-            />
+            /> */}
           </div>
         </Checkbox.Group>
       </div>
