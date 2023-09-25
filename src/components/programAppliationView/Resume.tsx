@@ -1,4 +1,3 @@
-import React from "react";
 import { IconWrap, SectionCard } from "../general";
 import { DownloadFileIcon, EyeIcon } from "../../assets/Icons";
 
