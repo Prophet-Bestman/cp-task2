@@ -1,21 +1,37 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { applications as applicationsList } from "../data";
 import { debounce } from "../helpers";
 
 interface IApplicationContext {
   applications: IApplication[];
   selectedApplication: IApplication;
+  selectedType: string;
+  selectedTypeCount: number;
   selectApplication: (id: number) => void;
   selectCategory: (category: string) => void;
   searchApplication: (searchTerm: string) => void;
+  setSelectedType: (type: string) => void;
 }
 
 const defaultContext = {
   applications: applicationsList,
   selectedApplication: applicationsList[0],
+  selectedType: "Applied",
+
+  selectedTypeCount: applicationsList.filter(
+    (applicaion) => applicaion.type === "Applied"
+  ).length,
+
   selectApplication: () => {},
   selectCategory: () => {},
   searchApplication: () => {},
+  setSelectedType: () => {},
 };
 
 const ApplicationsContext = createContext<IApplicationContext>(defaultContext);
@@ -30,6 +46,23 @@ const ApplicationsProvider = ({ children }: PropsWithChildren) => {
   const [selectedApplication, setSelectedApplication] = useState(
     applicationsList[0]
   );
+
+  const [selectedType, setSelectedType] = useState("Applied");
+  const [selectedTypeCount, setSelectedTypeCount] = useState(
+    applicationsList.filter((applicaion) => applicaion.type === "Applied")
+      .length
+  );
+
+  useEffect(() => {
+    if (selectedType) {
+      const newApplicationsList = applicationsList.filter(
+        (application) => application.type === selectedType
+      );
+
+      setApplications(newApplicationsList);
+      setSelectedTypeCount(newApplicationsList.length);
+    }
+  }, [selectedType]);
 
   // SELECT CATEGORY OF APPLICATIONS
   const selectCategory = (category: string) => {
@@ -61,11 +94,14 @@ const ApplicationsProvider = ({ children }: PropsWithChildren) => {
   return (
     <ApplicationsContext.Provider
       value={{
-        selectApplication,
         applications,
+        selectedApplication,
+        selectedType,
+        selectedTypeCount,
+        selectApplication,
         searchApplication,
         selectCategory,
-        selectedApplication,
+        setSelectedType,
       }}
     >
       {children}

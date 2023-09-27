@@ -1,5 +1,6 @@
 :root {
   font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
 }
 
 @tailwind base;
@@ -20,30 +21,94 @@
   }
 }
 
-.ant-tabs-nav {
-  justify-content: space-between;
+.ant-tabs-nav,
+.ant-tabs-nav-list {
+  justify-content: space-evenly;
   width: 100%;
+}
+
+.ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  display: none;
 }
 
 .ant-tabs-nav::before {
   display: none; /* Hide the line under the tab bar */
 }
 
+.ant-tabs-tab.ant-tabs-tab-active {
+  border-bottom: 2px solid #1d5ecd;
+}
 .ant-tabs .ant-tabs-tab .ant-tabs-tab-btn {
   font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 0;
+  padding-bottom: 4px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
-
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #0557e5;
-  font-family: Poppins;
-}
-
-/* .ant-tabs .ant-tabs-tab.ant-tabs-tab-active {
-  border-bottom: 1px red solid !important;
-  z-index: 10;
-} */
 
 .ant-tabs-nav-wrap {
+}
+
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown {
+  position: relative;
+  transition: all ease-in-out;
+  animation: slideInRight 1s ease-in-out forwards;
+}
+.details {
+  position: relative;
+  transition: all ease-in-out;
+  animation: slideInLeft 0.8s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    filter: blur(6);
+    transform: translateX(-100%);
+  }
+  60% {
+    opacity: 0;
+    filter: blur(6);
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 100;
+    filter: blur(0px);
+    transform: translateX(0%);
+  }
+}
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 100;
+    filter: blur(0px);
+    transform: translateY(0%);
+  }
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+  padding: 0 !important;
+  font-size: 16px;
+  border-top: 1px #eee solid;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child:hover {
+  color: #1d5ecd;
+  font-weight: 500;
 }

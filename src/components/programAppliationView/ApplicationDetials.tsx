@@ -3,8 +3,6 @@ import ApplicationHeader from "./ApplicationHeader";
 import ProfileTab from "./ProfileTab";
 
 const ApplicationDetials = () => {
-  // const { selectedApplication } = useApplicationsContext();
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -39,11 +37,10 @@ const ApplicationDetials = () => {
   ];
 
   return (
-    <div className="w-full h-[calc(100vh-32px)] overflow-y-auto">
+    <div className="w-full details h-[calc(100vh-32px)] overflow-y-auto details">
       <ApplicationHeader />
 
-      {/* @ts-ignore */}
-      <Tabs className="my-8" type="none" defaultActiveKey="1" items={items} />
+      <Tabs animated className="my-8" defaultActiveKey="1" items={items} />
     </div>
   );
 };

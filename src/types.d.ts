@@ -8,4 +8,5 @@ interface IApplication {
   score: number;
   category: string;
   id: number;
+  type: string;
 }

@@ -1,5 +1,5 @@
-import ApplicationsProvider from "./context/ApplicationsProvider";
-import MainLayout from "./layouts/MainLayout";
+import { ApplicationsProvider } from "./context";
+import { MainLayout } from "./layouts";
 import { ProgramApplicationView } from "./pages";
 
 function App() {

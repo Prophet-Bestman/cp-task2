@@ -1,14 +1,15 @@
-import { Checkbox, Dropdown, Input, MenuProps } from "antd";
+import { Checkbox, Drawer, Dropdown, Input, MenuProps, theme } from "antd";
 import {
   CheveronDown,
-  HomeIcon,
+  FilterIcon,
   SearchIcon,
   WarningIcon,
 } from "../../assets/Icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { CustomAvatar, Pill } from "../general";
 import { useApplicationsContext } from "../../context/ApplicationsProvider";
+import { applications as applicationslist } from "../../data";
 
 const categories = [
   {
@@ -25,18 +26,35 @@ const categories = [
   },
 ];
 
+const { useToken } = theme;
+
 const ApplicationFilterSection = () => {
   const [selectedTab, setSelectedTab] = useState(categories[0].name);
   const [checked, setChecked] = useState<CheckboxValueType[]>([]);
   const [checkAll, setCheckAll] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   const {
     applications,
     selectCategory,
     searchApplication,
     selectApplication,
+    setSelectedType,
     selectedApplication,
+    selectedType,
   } = useApplicationsContext();
+
+  // GET COUNT OF APPLICATIONS
+  const getCount = (arg: string) =>
+    applicationslist.filter((application) => application.type === arg).length;
 
   useEffect(() => {
     setCheckAll(checked.length === applications.length);
@@ -47,10 +65,66 @@ const ApplicationFilterSection = () => {
     setCheckAll(e.target.checked);
   };
 
+  const { token } = useToken();
+
+  const contentStyle: React.CSSProperties = {
+    backgroundColor: token.colorBgElevated,
+    borderRadius: token.borderRadiusLG,
+    boxShadow: token.boxShadowSecondary,
+    padding: 0,
+  };
+
+  const menuStyle: React.CSSProperties = {
+    boxShadow: "none",
+    padding: 0,
+    margin: 0,
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <DropDownItem title="Applied" count={getCount("Applied")} />,
+      onClick: () => setSelectedType("Applied"),
+    },
+    {
+      key: "2",
+      label: (
+        <DropDownItem title="Shortlisted" count={getCount("Shortlisted")} />
+      ),
+      onClick: () => setSelectedType("Shortlisted"),
+    },
+    {
+      key: "3",
+      label: (
+        <DropDownItem
+          title="Technical Interview"
+          count={getCount("Technical Interview")}
+        />
+      ),
+      onClick: () => setSelectedType("Technical Interview"),
+    },
+    {
+      key: "4",
+      label: <DropDownItem title="Offer" count={getCount("Offer")} />,
+      onClick: () => setSelectedType("Offer"),
+    },
+  ];
+
   return (
-    <div className="w-[440px] min-h-[calc(100vh-32px)] top-0 left-0 z-10 sticky space-y-2 ">
-      {/* @ts-ignore */}
-      <Dropdown menu={{ items }} className="cursor-pointer" trigger="click">
+    <div className="w-[440px] dropdown min-h-[calc(100vh-32px)] top-0 left-0 z-10 sticky space-y-2 ">
+      <Dropdown
+        menu={{ items }}
+        className="cursor-pointer "
+        //  @ts-ignore
+        trigger="click"
+        dropdownRender={(menu) => (
+          <div style={contentStyle}>
+            {React.cloneElement(menu as React.ReactElement, {
+              style: menuStyle,
+            })}
+          </div>
+        )}
+      >
         <a onClick={(e) => e.preventDefault()}>
           <div className="flex items-center p-2 bg-white rounded-lg">
             <div className="center-item w-8 h-8 p-2 text-[13px] font-bold uppercase rounded-full bg-bg">
@@ -58,7 +132,7 @@ const ApplicationFilterSection = () => {
             </div>
             <Hr />
             <div className="flex w-full text-[#384A69] font-medium justify-between mr-[2px]">
-              <p>Opportunity Browsing</p>
+              <p>{selectedType || "Select an application type"}</p>
               <p>2332</p>
             </div>
             <Hr />
@@ -67,21 +141,29 @@ const ApplicationFilterSection = () => {
         </a>
       </Dropdown>
 
-      <Input
-        onChange={(e) => searchApplication(e.target.value)}
-        className="h-12 remove-input-styles placeholder:text-[#9AA6AC] w-full"
-        placeholder="Serach by name, edu, exp or #tag"
-        prefix={
-          <div className="text-[#9AA6AC] pxa-3">
-            <SearchIcon />
-          </div>
-        }
-        suffix={
-          <div className="text-[#9AA6AC] pxa-3">
-            <WarningIcon />
-          </div>
-        }
-      />
+      <div className="flex items-center gap-2">
+        <Input
+          onChange={(e) => searchApplication(e.target.value)}
+          className="h-12 remove-input-styles placeholder:text-[#9AA6AC] w-full"
+          placeholder="Serach by name, edu, exp or #tag"
+          prefix={
+            <div className="text-[#9AA6AC] pxa-3">
+              <SearchIcon />
+            </div>
+          }
+          suffix={
+            <div className="text-[#9AA6AC] pxa-3">
+              <WarningIcon />
+            </div>
+          }
+        />
+        <div
+          className="p-3 bg-white rounded-lg cursor-pointer "
+          onClick={showDrawer}
+        >
+          <FilterIcon />
+        </div>
+      </div>
 
       <div className="flex items-center p-2 bg-white rounded-t-2xl h-[54px]">
         <Checkbox onChange={onCheckAllChange} checked={checkAll}></Checkbox>
@@ -116,7 +198,7 @@ const ApplicationFilterSection = () => {
         </div>
       </div>
 
-      <div className="px-4 py-2 bg-white rounded-b-2xl h-[70vh] overflow-y-auto">
+      <div className="px-4 py-2 bg-white rounded-b-2xl h-[70vh] hide-scroll overflow-y-auto">
         <Checkbox.Group
           style={{ width: "100%" }}
           value={checked}
@@ -233,6 +315,18 @@ const ApplicationFilterSection = () => {
           </div>
         </Checkbox.Group>
       </div>
+
+      <Drawer
+        title="Applications Drawer"
+        placement="right"
+        onClose={onClose}
+        open={open}
+        size="large"
+      >
+        {/* <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p> */}
+      </Drawer>
     </div>
   );
 };
@@ -241,25 +335,29 @@ const Hr = () => <div className="h-5 mx-[14px] w-[3px] bg-[#EEF2FF]"></div>;
 
 export default ApplicationFilterSection;
 
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: <div>1st menu item</div>,
-  },
-  {
-    key: "2",
-    label: <div>2nd menu item (disabled)</div>,
-    icon: <HomeIcon />,
-    disabled: true,
-  },
-  {
-    key: "3",
-    label: <div>3rd menu item (disabled)</div>,
-    disabled: true,
-  },
-  {
-    key: "4",
+interface DropDownItemProps {
+  title: string;
+  count: number;
+}
 
-    label: "a danger item",
-  },
-];
+const DropDownItem = ({ title, count }: DropDownItemProps) => {
+  const { selectedType } = useApplicationsContext();
+
+  return (
+    <div
+      className={`flex items-center justify-between px-4 py-6 hover:bg-[#EDF2FF] ${
+        selectedType === title ? "bg-[#EDF2FF] text-primary font-medium" : ""
+      }`}
+    >
+      <p>{title}</p>
+
+      <div
+        className={`rounded-full  px-[10px] py-1 ${
+          selectedType === title ? "bg-[#D1DDFF] text-primary" : "bg-[#F8F8F8]"
+        }`}
+      >
+        {count}
+      </div>
+    </div>
+  );
+};
