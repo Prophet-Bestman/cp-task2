@@ -21,6 +21,7 @@
   }
 }
 
+/* AND DESIGN OVERIDES */
 .ant-tabs-nav,
 .ant-tabs-nav-list {
   justify-content: space-evenly;
@@ -48,7 +49,15 @@
   padding-right: 16px;
 }
 
-.ant-tabs-nav-wrap {
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
+  padding: 0 !important;
+  font-size: 16px;
+  border-top: 1px #eee solid;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child:hover {
+  color: #1d5ecd;
+  font-weight: 500;
 }
 
 .hide-scroll {
@@ -65,29 +74,55 @@
   transition: all ease-in-out;
   animation: slideInRight 1s ease-in-out forwards;
 }
+
 .details {
   position: relative;
   transition: all ease-in-out;
   animation: slideInLeft 0.8s ease-in-out forwards;
 }
 
+.side-nav {
+  position: relative;
+  transition: all ease-in-out;
+  animation: slideInNav 1.3s ease-in-out forwards;
+}
+
 @keyframes slideInRight {
   0% {
     opacity: 0;
-    filter: blur(6);
+    filter: blur(8);
     transform: translateX(-100%);
   }
   60% {
     opacity: 0;
-    filter: blur(6);
+    filter: blur(8);
     transform: translateX(-100%);
   }
-  to {
+  80% {
+    opacity: 0;
+    filter: blur(8);
+    transform: translate(-30%);
+  }
+  100% {
     opacity: 100;
     filter: blur(0px);
     transform: translateX(0%);
   }
 }
+
+@keyframes slideInNav {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  90% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 @keyframes slideInLeft {
   0% {
     opacity: 0;
@@ -95,20 +130,9 @@
     transform: translateY(100%);
   }
 
-  to {
+  100% {
     opacity: 100;
     filter: blur(0px);
     transform: translateY(0%);
   }
-}
-
-.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child {
-  padding: 0 !important;
-  font-size: 16px;
-  border-top: 1px #eee solid;
-}
-
-.ant-dropdown-menu-item.ant-dropdown-menu-item-only-child:hover {
-  color: #1d5ecd;
-  font-weight: 500;
 }
