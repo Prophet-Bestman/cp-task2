@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ConfigProvider } from "antd";
+
 import App from "./App.tsx";
 import "./index.css";
-import { ConfigProvider } from "antd";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -11,7 +12,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         token: {
           colorPrimary: "#1d5ecd",
           colorPrimaryBgHover: "#EDF2FF",
-          // colorPrimaryActive: ''
         },
       }}
     >

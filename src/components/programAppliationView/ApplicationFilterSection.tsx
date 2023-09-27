@@ -1,4 +1,6 @@
 import { Checkbox, Drawer, Dropdown, Input, MenuProps, theme } from "antd";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
+
 import {
   CheveronDown,
   FilterIcon,
@@ -6,7 +8,6 @@ import {
   WarningIcon,
 } from "../../assets/Icons";
 import React, { useEffect, useState } from "react";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { CustomAvatar, Pill } from "../general";
 import { useApplicationsContext } from "../../context/ApplicationsProvider";
 import { applications as applicationslist } from "../../data";
@@ -115,8 +116,7 @@ const ApplicationFilterSection = () => {
       <Dropdown
         menu={{ items }}
         className="cursor-pointer "
-        //  @ts-ignore
-        trigger="click"
+        trigger={["click"]}
         dropdownRender={(menu) => (
           <div style={contentStyle}>
             {React.cloneElement(menu as React.ReactElement, {

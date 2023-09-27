@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
+import { Checkbox, Dropdown, Space } from "antd";
+
 import { SectionCard } from "../general";
 import videoImg from "../../assets/answer-video.png";
-import { Checkbox, Dropdown, Space } from "antd";
-import { useEffect, useState } from "react";
 
 const AdditionalQuestions = () => {
   const [filteredQuestions, setFilteredQuestions] = useState(questions);

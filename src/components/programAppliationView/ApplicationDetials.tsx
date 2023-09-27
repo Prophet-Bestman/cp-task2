@@ -1,4 +1,5 @@
 import { Tabs, TabsProps } from "antd";
+
 import ApplicationHeader from "./ApplicationHeader";
 import ProfileTab from "./ProfileTab";
 
@@ -37,7 +38,7 @@ const ApplicationDetials = () => {
   ];
 
   return (
-    <div className="w-full details h-[calc(100vh-32px)] overflow-y-auto details">
+    <div className="w-full details h-[calc(100vh-32px)] hide-scroll overflow-y-auto details">
       <ApplicationHeader />
 
       <Tabs animated className="my-8" defaultActiveKey="1" items={items} />
