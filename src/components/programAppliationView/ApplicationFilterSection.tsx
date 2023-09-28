@@ -112,7 +112,7 @@ const ApplicationFilterSection = () => {
   ];
 
   return (
-    <div className="w-[440px] dropdown min-h-[calc(100vh-32px)] top-0 left-0 z-10 sticky space-y-2 ">
+    <div className="w-[440px] flex flex-col dropdown h-[calc(100vh-64px)] top-0 left-0 z-10 sticky space-y-2 ">
       <Dropdown
         menu={{ items }}
         className="cursor-pointer "
@@ -198,7 +198,7 @@ const ApplicationFilterSection = () => {
         </div>
       </div>
 
-      <div className="px-4 py-2 bg-white rounded-b-2xl h-[70vh] hide-scroll overflow-y-auto">
+      <div className="flex-1 px-4 py-2 overflow-y-auto bg-white rounded-b-2xl hide-scroll">
         <Checkbox.Group
           style={{ width: "100%" }}
           value={checked}
@@ -322,11 +322,7 @@ const ApplicationFilterSection = () => {
         onClose={onClose}
         open={open}
         size="large"
-      >
-        {/* <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p> */}
-      </Drawer>
+      ></Drawer>
     </div>
   );
 };

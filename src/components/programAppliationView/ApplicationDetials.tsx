@@ -38,7 +38,7 @@ const ApplicationDetials = () => {
   ];
 
   return (
-    <div className="w-full details h-[calc(100vh-32px)] hide-scroll overflow-y-auto details">
+    <div className="flex-1 w-full h-[calc(100vh-38px)] overflow-y-auto details hide-scroll">
       <ApplicationHeader />
 
       <Tabs animated className="my-8" defaultActiveKey="1" items={items} />
